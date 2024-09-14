@@ -1,0 +1,20 @@
+<nav class="header-menu">
+  <div class="company-name">Sistema Gestión de Tareas</div>
+
+  <div class="menu-options">
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>person</mat-icon>
+        Perfil
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Cerrar Sesión
+      </button>
+    </mat-menu>
+
+    <button mat-button color="warn" [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</nav>

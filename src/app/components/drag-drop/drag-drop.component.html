@@ -1,0 +1,98 @@
+<div class="search-bar-container">
+  <mat-form-field class="search-bar">
+    <mat-label>Buscar Tarea</mat-label>
+    <input matInput placeholder="titulo ó descripcion" [(ngModel)]="findTask" />
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    color="primary"
+    class="create-button"
+    (click)="openDialog('add')"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<div class="dashboard">
+  <div class="container">
+    <h2>Tareas Creadas</h2>
+
+    <div
+      cdkDropList
+      #todoList="cdkDropList"
+      [cdkDropListData]="todo"
+      [cdkDropListConnectedTo]="doneList"
+      class="list"
+      (cdkDropListDropped)="drop($event, 'todo')"
+    >
+      @for (item of todo | filter: findTask; track item) {
+      <div class="list-item" cdkDrag>
+        <div>
+          <strong>{{ item.title }}</strong>
+          <p>
+            <span class="bold">Fecha Vencimiento: </span>
+            {{ item.expirationDate }}
+          </p>
+        </div>
+        <div class="actions">
+          <button
+            mat-mini-fab
+            color="primary"
+            (click)="openDialog('view', item)"
+          >
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            color="primary"
+            (click)="openDialog('edit', item)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            color="primary"
+            (click)="openDialog('delete', item)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Tareas Completadas</h2>
+
+    <div
+      cdkDropList
+      #doneList="cdkDropList"
+      [cdkDropListData]="done"
+      [cdkDropListConnectedTo]="todoList"
+      class="list"
+      (cdkDropListDropped)="drop($event, 'done')"
+    >
+      @for (item of done | filter: findTask; track item) {
+      <div class="list-item" cdkDrag>
+        <div>
+          <strong>{{ item.title }}</strong>
+          <p>
+            <span class="bold">Fecha Vencimiento: </span>
+            {{ item.expirationDate }}
+          </p>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  <mat-paginator
+    class="paginator container"
+    [length]="tasks.length"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+</div>

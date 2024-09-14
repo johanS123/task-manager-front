@@ -1,0 +1,48 @@
+<h2 class="title">{{ title }}</h2>
+<mat-dialog-content>
+  @switch (action) { @case (0) {
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ task.title }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="descripcion">
+        <strong>Descripción:</strong>
+        <p>
+          {{ task.description }}
+        </p>
+      </div>
+      <div class="info">
+        <div>
+          <strong>Fecha de Vencimiento:</strong>
+          <p>2023-12-31</p>
+        </div>
+        <div>
+          <strong>Estado:</strong>
+          @if (task.isComplete) {
+          <p>Completado</p>
+          }@else {
+          <p>Pendiente</p>
+          }
+        </div>
+        <div>
+          <strong>Usuario Asignado:</strong>
+          <p>Juan Pérez</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  } @case (1) {
+  <app-task-form
+    [action]="actions[action]"
+    (closeDialog)="closeDialog()"
+  ></app-task-form>
+  } @case (2) {
+  <app-task-form
+    [action]="actions[action]"
+    [data]="task"
+    (closeDialog)="closeDialog()"
+  ></app-task-form>
+  } }
+</mat-dialog-content>

@@ -1,0 +1,39 @@
+<form class="form-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="full-width-fields">
+    <mat-form-field appearance="fill">
+      <mat-label>Titulo</mat-label>
+      <input matInput formControlName="title" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <div class="two-column-fields">
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de Vencimiento</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          formControlName="expirationDate"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Usuario Asignado</mat-label>
+        <mat-select formControlName="userAssign">
+          <mat-option *ngFor="let option of usersOptions" [value]="option">{{
+            option.firstname
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="button-container">
+    <button mat-raised-button color="primary" type="submit">Enviar</button>
+  </div>
+</form>
