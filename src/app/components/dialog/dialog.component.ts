@@ -52,6 +52,10 @@ export class DialogComponent {
         this.title = 'Editar';
         this.task = item;
         break;
+      case 'delete':
+        this.action = 3;
+        this.title = 'Eliminar';
+        break;
     }
   }
 

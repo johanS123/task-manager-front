@@ -35,6 +35,8 @@ import {
 } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TaskService } from '../../services/task.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-drag-drop',
@@ -64,17 +66,6 @@ export class DragDropComponent implements OnInit {
   findTask: string = '';
   pageSize: number = 10;
 
-  intialTaks: Task = {
-    id: 0,
-    title: '',
-    description: '',
-    expirationDate: '',
-    isActive: false,
-    isComplete: false,
-    userCreateId: 0,
-    userAssignId: 0,
-  };
-
   dataSource1 = new MatTableDataSource<any>(this.todo);
   dataSource2 = new MatTableDataSource<any>(this.done);
 
@@ -83,7 +74,8 @@ export class DragDropComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -137,7 +129,7 @@ export class DragDropComponent implements OnInit {
     }
   }
 
-  openDialog(action: string, item: Task = this.intialTaks) {
+  openDialog(action: string, item: Task = new Task()) {
     const dialogRef = this.dialog.open(DialogComponent, {
       data: {
         action,
@@ -157,5 +149,20 @@ export class DragDropComponent implements OnInit {
 
   onPageChange(event: PageEvent) {
     this.loadData(event.pageSize);
+  }
+
+  deleteTask(item: Task) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.taskService.deleteTask(item.id).subscribe((resp) => {
+          this.notificationService.showMessage(
+            'Tarea eliminada Exitosamente!!'
+          );
+          this.getTasks(this.pageSize);
+        });
+      }
+    });
   }
 }

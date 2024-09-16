@@ -51,4 +51,8 @@ export class TaskService {
     };
     return this.http.put<any>(`${this.domain}/api/tasks/${id}`, bodySend);
   }
+
+  deleteTask(id: number) {
+    return this.http.delete(`${this.domain}/api/tasks/${id}`);
+  }
 }

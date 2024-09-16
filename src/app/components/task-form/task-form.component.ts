@@ -115,8 +115,6 @@ export class TaskFormComponent implements OnChanges {
       formatDate.getMonth() + 1
     }-${formatDate.getDate()}`;
 
-    console.log('ex', expirationDate, expirate);
-
     let body = {
       expirationDate: expirate,
       ...rest,
