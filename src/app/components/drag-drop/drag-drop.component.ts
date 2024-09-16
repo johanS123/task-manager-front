@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   inject,
@@ -80,7 +81,10 @@ export class DragDropComponent implements OnInit {
   @ViewChild('paginator1') paginator1!: MatPaginator;
   @ViewChild('paginator2') paginator2!: MatPaginator;
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.loadData(this.pageSize);
@@ -98,6 +102,8 @@ export class DragDropComponent implements OnInit {
 
       this.todo = this.tasks.filter((el: Task) => !el.isComplete);
       this.done = this.tasks.filter((el: Task) => el.isComplete);
+
+      this.cdr.detectChanges();
     });
   }
 
@@ -141,7 +147,7 @@ export class DragDropComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
-      this.isSave.emit();
+      this.getTasks(this.pageSize);
     });
   }
 

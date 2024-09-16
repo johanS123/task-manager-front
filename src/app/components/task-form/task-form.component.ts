@@ -83,10 +83,11 @@ export class TaskFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.action == 'editar') {
-      let { title, description, expirationDate, ...rest } = this.data;
+      let { title, description, expirationDate, userAssignId, ...rest } =
+        this.data;
 
+      this.getUserForId(userAssignId);
       let formatDate = this.getDate(expirationDate);
-
       this.form.controls['title'].setValue(title);
       this.form.controls['description'].setValue(description);
       this.form.controls['expirationDate'].setValue(formatDate);
@@ -99,9 +100,25 @@ export class TaskFormComponent implements OnChanges {
     });
   }
 
+  getUserForId(id: number) {
+    this.userService
+      .getUsersId(id)
+      .subscribe((resp) =>
+        this.form.controls['userAssign'].setValue(resp.users.id)
+      );
+  }
+
   onSubmit() {
-    let { ...rest } = this.form.value;
+    let { expirationDate, ...rest } = this.form.value;
+    let formatDate = new Date(expirationDate);
+    let expirate = `${formatDate.getFullYear()}-${
+      formatDate.getMonth() + 1
+    }-${formatDate.getDate()}`;
+
+    console.log('ex', expirationDate, expirate);
+
     let body = {
+      expirationDate: expirate,
       ...rest,
       userCreate: this.idUserCreate,
     };
@@ -114,7 +131,12 @@ export class TaskFormComponent implements OnChanges {
         }
       });
     } else {
-      this.taskService.putTask(this.form.value, this.data.id);
+      this.taskService.putTask(body, this.data.id).subscribe((resp) => {
+        if (resp.status === 201) {
+          this.notificationService.showMessage('Tarea editada Exitosamente!!');
+          this.closeDialog.emit();
+        }
+      });
     }
   }
 

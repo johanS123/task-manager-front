@@ -38,6 +38,17 @@ export class TaskService {
   }
 
   putTask(body: any, id: number): Observable<any> {
-    return this.http.put<any>(`${this.domain}/api/tasks/${id}`, body);
+    let { title, description, expirationDate, userAssign, userCreate } = body;
+
+    let bodySend = {
+      title,
+      description,
+      expirationDate,
+      isActive: true,
+      isComplete: false,
+      userCreateId: userCreate,
+      userAssignId: userAssign,
+    };
+    return this.http.put<any>(`${this.domain}/api/tasks/${id}`, bodySend);
   }
 }

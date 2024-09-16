@@ -12,4 +12,8 @@ export class UserService {
   getUsers() {
     return this.http.get<any>(`${this.domain}/api/users`);
   }
+
+  getUsersId(id: number) {
+    return this.http.get<any>(`${this.domain}/api/users/${id}`);
+  }
 }
