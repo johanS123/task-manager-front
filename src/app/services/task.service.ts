@@ -55,4 +55,8 @@ export class TaskService {
   deleteTask(id: number) {
     return this.http.delete(`${this.domain}/api/tasks/${id}`);
   }
+
+  patchTask(body: any, id: number) {
+    return this.http.patch(`${this.domain}/api/tasks/${id}`, body);
+  }
 }

@@ -125,6 +125,7 @@ export class DragDropComponent implements OnInit {
           event.previousIndex,
           event.currentIndex
         );
+        this.updateCompleteTask(movedItem);
       }
     }
   }
@@ -164,5 +165,16 @@ export class DragDropComponent implements OnInit {
         });
       }
     });
+  }
+
+  updateCompleteTask(item: Task) {
+    let { isComplete } = item;
+    let body = {
+      isComplete,
+    };
+
+    this.taskService
+      .patchTask(body, item.id)
+      .subscribe((resp) => console.log('resp', resp));
   }
 }

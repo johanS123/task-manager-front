@@ -67,6 +67,7 @@
       #doneList="cdkDropList"
       [cdkDropListData]="done"
       [cdkDropListConnectedTo]="todoList"
+      [cdkDropListDisabled]="true"
       class="list"
       (cdkDropListDropped)="drop($event, 'done')"
     >
