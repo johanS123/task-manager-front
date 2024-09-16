@@ -6,8 +6,10 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { TaskFormComponent } from '../task-form/task-form.component';
-import { Task } from '../../models/task';
+import Task from '../../models/task';
 import { MatCardModule } from '@angular/material/card';
+import { UserService } from '../../services/user.service';
+import User from '../../models/user';
 
 @Component({
   selector: 'app-dialog',
@@ -20,20 +22,13 @@ export class DialogComponent {
   title: string = 'Detalles';
   action: number = 0;
   actions: string[] = ['detalles', 'crear', 'editar', 'eliminar'];
-  task: Task = {
-    id: 0,
-    title: '',
-    description: '',
-    expirationDate: '',
-    isActive: false,
-    isComplete: false,
-    userCreateId: 0,
-    userAssignId: 0,
-  };
+  user: User = new User();
+  task: Task = new Task();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<DialogComponent>
+    public dialogRef: MatDialogRef<DialogComponent>,
+    private userService: UserService
   ) {
     this.showScreen();
   }
@@ -46,6 +41,7 @@ export class DialogComponent {
         this.action = 0;
         this.title = 'Detalles';
         this.task = item;
+        this.getUserForId(this.task.userAssignId);
         break;
       case 'add':
         this.action = 1;
@@ -61,5 +57,11 @@ export class DialogComponent {
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  getUserForId(id: number) {
+    this.userService
+      .getUsersId(id)
+      .subscribe((resp) => (this.user = resp.users));
   }
 }

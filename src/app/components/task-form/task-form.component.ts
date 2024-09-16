@@ -26,9 +26,9 @@ import {
   MatNativeDateModule,
   provideNativeDateAdapter,
 } from '@angular/material/core';
-import { Task } from '../../models/task';
+import Task from '../../models/task';
 import { TaskService } from '../../services/task.service';
-import { User } from '../../models/user';
+import User from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { NotificationService } from '../../services/notification.service';

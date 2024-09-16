@@ -14,7 +14,6 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { Task } from '../../models/task';
 import { NotificationService } from '../../services/notification.service';
 
 @Component({

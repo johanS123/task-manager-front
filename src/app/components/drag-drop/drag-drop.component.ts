@@ -19,7 +19,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Task } from '../../models/task';
+import Task from '../../models/task';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
@@ -95,8 +95,8 @@ export class DragDropComponent implements OnInit {
 
     this.taskService.getTasks(params).subscribe((response: any) => {
       this.tasks = response?.data.map((el: Task) => {
-        el.isComplete = el.isComplete === '1';
-        el.isActive = el.isActive === '1';
+        el.isComplete = el.isComplete;
+        el.isActive = el.isActive;
         return el;
       });
 

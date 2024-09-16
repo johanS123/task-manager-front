@@ -7,8 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { DragDropComponent } from '../../components/drag-drop/drag-drop.component';
 import { TaskFormComponent } from '../../components/task-form/task-form.component';
-import { TaskService } from '../../services/task.service';
-import { Task } from '../../models/task';
 import { HeaderMenuComponent } from '../../components/header-menu/header-menu.component';
 
 @Component({
