@@ -2,12 +2,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Results } from '../models/results';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  private domain = `http://localhost:8000`;
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +16,7 @@ export class TaskService {
     const params = new HttpParams().set('per_page', pageSize);
 
     return this.http
-      .get<Results>(`${this.domain}/api/tasks`, { params })
+      .get<Results>(`${this.apiUrl}/tasks`, { params })
       .pipe((resp: any) => {
         return resp;
       });
@@ -34,7 +35,7 @@ export class TaskService {
       userAssignId: userAssign.id,
     };
 
-    return this.http.post(`${this.domain}/api/tasks`, bodySend);
+    return this.http.post(`${this.apiUrl}/tasks`, bodySend);
   }
 
   putTask(body: any, id: number): Observable<any> {
@@ -49,14 +50,14 @@ export class TaskService {
       userCreateId: userCreate,
       userAssignId: userAssign,
     };
-    return this.http.put<any>(`${this.domain}/api/tasks/${id}`, bodySend);
+    return this.http.put<any>(`${this.apiUrl}/tasks/${id}`, bodySend);
   }
 
   deleteTask(id: number) {
-    return this.http.delete(`${this.domain}/api/tasks/${id}`);
+    return this.http.delete(`${this.apiUrl}/tasks/${id}`);
   }
 
   patchTask(body: any, id: number) {
-    return this.http.patch(`${this.domain}/api/tasks/${id}`, body);
+    return this.http.patch(`${this.apiUrl}/tasks/${id}`, body);
   }
 }

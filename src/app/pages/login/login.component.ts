@@ -1,4 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { NotificationService } from '../../services/notification.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TextFieldModule } from '@angular/cdk/text-field';
@@ -6,18 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { NotificationService } from '../../services/notification.service';
-
 @Component({
-  selector: 'app-login-form',
+  selector: 'app-login',
   standalone: true,
   imports: [
     MatFormFieldModule,
@@ -28,12 +27,11 @@ import { NotificationService } from '../../services/notification.service';
     ReactiveFormsModule,
     CommonModule,
   ],
-  templateUrl: './login-form.component.html',
-  styleUrl: './login-form.component.sass',
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.sass',
 })
-export class LoginFormComponent implements OnInit {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-
   constructor(
     private fb: FormBuilder,
     private notificationService: NotificationService,

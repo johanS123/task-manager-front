@@ -5,13 +5,15 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private domain = 'http://localhost:8000';
-  public token: String | null = '';
+  private apiUrl = environment.apiUrl;
+  public token: string | null = '';
+  private roles: string[] = [];
 
   constructor(
     private http: HttpClient,
@@ -53,7 +55,7 @@ export class AuthService {
 
   login(email: string, password: string): Observable<any> {
     return this.http
-      .post<any>(`${this.domain}/api/login`, { email, password })
+      .post<any>(`${this.apiUrl}/login`, { email, password })
       .pipe(
         tap((response) => {
           localStorage.setItem('token', response.token);
@@ -71,5 +73,9 @@ export class AuthService {
       return localStorage.getItem('token');
     }
     return null;
+  }
+
+  getUserRoles(): string[] {
+    return this.roles;
   }
 }
